@@ -20,6 +20,7 @@ class IdeasScreen extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           child: Text(
             gptReponseData.choices[0].text,
+            style: const TextStyle(fontSize: 20),
           ),
         )
       ]),
