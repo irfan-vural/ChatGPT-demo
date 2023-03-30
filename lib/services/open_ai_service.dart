@@ -4,15 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/open_ai_model.dart';
-import '../screen/ideas_screen.dart';
 
 class OpenAiService {
   String apiKey = Constants().apiKey;
   var response;
   Future<GptData?> fetchData(
     BuildContext context,
-    TextEditingController _controller,
-    GlobalKey<FormState> _formKey,
+    TextEditingController controller,
+    GlobalKey<FormState> formKey,
   ) async {
     var url = Uri.parse('https://api.openai.com/v1/completions');
 
@@ -22,7 +21,7 @@ class OpenAiService {
       'Authorization': 'Bearer $apiKey'
     };
 
-    String promptData = " ${_controller.value.text} ";
+    String promptData = " ${controller.value.text} ";
 
     final data = jsonEncode({
       "model": "text-davinci-003",
@@ -34,7 +33,7 @@ class OpenAiService {
       "presence_penalty": 0
     });
 
-    if (_formKey.currentState!.validate()) {
+    if (formKey.currentState!.validate()) {
       response = await http.post(url, headers: headers, body: data);
       if (response.statusCode == 200) {
         return gptDataFromJson(response.body);

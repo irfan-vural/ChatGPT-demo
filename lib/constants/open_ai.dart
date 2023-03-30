@@ -1,3 +1,3 @@
 class Constants {
-  String apiKey = "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";
+  String apiKey = "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";
 }
