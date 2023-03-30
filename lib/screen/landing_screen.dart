@@ -2,11 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart' as http;
-
 import '../core/open_ai_cubit.dart';
 import '../core/open_ai_state.dart';
-import '../models/open_ai_model.dart';
 import '../services/open_ai_service.dart';
 import 'ideas_screen.dart';
 
@@ -18,7 +15,7 @@ class LandingScreen extends StatefulWidget {
 }
 
 class _LandingScreenState extends State<LandingScreen> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController controller = TextEditingController();
 
   bool isLoading = false;
@@ -30,12 +27,12 @@ class _LandingScreenState extends State<LandingScreen> {
           title: const Text('ChatGPT Demo'),
         ),
         body: BlocProvider(
-          create: (context) => OpenAiCubit(),
+          create: (context) => OpenAiCubit(formKey, controller),
           child: BlocBuilder<OpenAiCubit, OpenAiState>(
             builder: (context, state) {
               if (state is OpenAiInitial) {
                 return Form(
-                  key: _formKey,
+                  key: formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -58,8 +55,7 @@ class _LandingScreenState extends State<LandingScreen> {
                         child: ElevatedButton(
                           child: const Text('Submit'),
                           onPressed: () async {
-                            await OpenAiService()
-                                .fetchData(context, controller, _formKey);
+                            context.read<OpenAiCubit>().getAnswer(context);
                           },
                         ),
                       ),
@@ -73,8 +69,11 @@ class _LandingScreenState extends State<LandingScreen> {
                 );
               }
               if (state is OpenAiLoaded) {
-                return IdeasScreen(gptReponseData: state.gptReponseData);
+                return IdeasScreen(
+                  gptReponseData: state.response,
+                );
               }
+              throw Exception('Error');
             },
           ),
         ));

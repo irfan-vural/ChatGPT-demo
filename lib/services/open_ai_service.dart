@@ -9,8 +9,11 @@ import '../screen/ideas_screen.dart';
 class OpenAiService {
   String apiKey = Constants().apiKey;
   var response;
-  Future<GptData?> fetchData(BuildContext context,
-      TextEditingController _controller, GlobalKey<FormState> _formKey) async {
+  Future<GptData?> fetchData(
+    BuildContext context,
+    TextEditingController _controller,
+    GlobalKey<FormState> _formKey,
+  ) async {
     var url = Uri.parse('https://api.openai.com/v1/completions');
 
     Map<String, String> headers = {
@@ -19,8 +22,6 @@ class OpenAiService {
       'Authorization': 'Bearer $apiKey'
     };
 
-    //String promptData =
-    //    "Suggest gift ideas for someone who is realted to me as $firstDropdownValue of $gender gender for the occasion of $secondDropdownValue in budget less than 10,000 rupees with ${_controller.value.text} as hobbies.";
     String promptData = " ${_controller.value.text} ";
 
     final data = jsonEncode({

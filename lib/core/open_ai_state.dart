@@ -1,3 +1,5 @@
+import 'package:chatgpt_demo/models/open_ai_model.dart';
+
 class OpenAiState {
   OpenAiState();
 }
@@ -12,7 +14,7 @@ class OpenAiLoading extends OpenAiState {
 
 class OpenAiLoaded extends OpenAiState {
   OpenAiLoaded(this.response);
-  final String response;
+  final GptData response;
 }
 
 class OpenAiError extends OpenAiState {
