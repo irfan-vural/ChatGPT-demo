@@ -24,7 +24,13 @@ class _LandingScreenState extends State<LandingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('ChatGPT Demo'),
+          backgroundColor: Colors.amber.shade900,
+          title: const Text(
+            'ChatGPT Demo',
+            style: TextStyle(
+              color: Colors.black87,
+            ),
+          ),
         ),
         body: BlocProvider(
           create: (context) => OpenAiCubit(formKey, controller),
