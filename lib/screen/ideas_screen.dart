@@ -10,10 +10,10 @@ class IdeasScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 10),
+        const Padding(
+          padding: EdgeInsets.only(left: 10),
           child: Text(
-            "Here are your answer",
+            "The AI has generated the following answer:",
           ),
         ),
         Padding(
